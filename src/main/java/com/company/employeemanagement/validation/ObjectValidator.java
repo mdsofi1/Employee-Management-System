@@ -72,16 +72,18 @@ public class ObjectValidator implements IValidator<Object> {
                     }
                 }
                 
-                // Check @Min annotation
+                // Check @Min annotation for numeric fields
                 if (field.isAnnotationPresent(Min.class)) {
                     Min min = field.getAnnotation(Min.class);
                     try {
                         Object value = field.get(obj);
                         if (value != null) {
                             double numValue = 0;
+                            // Use pattern matching for instanceof (Java 16+)
                             if (value instanceof Number num) {
                                 numValue = num.doubleValue();
                             }
+                            // Validate against minimum value
                             if (numValue < min.value()) {
                                 throw new InvalidEmployeeDataException(min.message());
                             }
@@ -94,7 +96,7 @@ public class ObjectValidator implements IValidator<Object> {
                 }
             }
             
-            // Move to parent class
+            // Move to parent class to validate inherited fields
             clazz = clazz.getSuperclass();
         }
     }

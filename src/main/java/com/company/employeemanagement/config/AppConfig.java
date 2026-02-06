@@ -1,32 +1,67 @@
 package com.company.employeemanagement.config;
 
 /**
- * Application Configuration - Single Responsibility Principle (SRP)
- * Centralized configuration and constants
- * Makes it easy to modify application behavior without changing code
+ * Application-wide configuration constants.
+ * Demonstrates Single Responsibility Principle (SRP) - handles only configuration.
+ * 
+ * <p>This utility class provides centralized configuration for:</p>
+ * <ul>
+ *   <li>Display formatting constants</li>
+ *   <li>Validation minimum values</li>
+ *   <li>Tax and business rules</li>
+ *   <li>Menu option codes</li>
+ *   <li>Standard messages</li>
+ * </ul>
+ * 
+ * <p>Benefits of centralized configuration:</p>
+ * <ul>
+ *   <li>Easy to modify application behavior</li>
+ *   <li>Consistent values across the application</li>
+ *   <li>Single source of truth for constants</li>
+ *   <li>Prevents magic numbers in code</li>
+ * </ul>
+ * 
+ * @author Employee Management System
+ * @version 3.0.0
  */
 public final class AppConfig {
     
-    // Prevent instantiation
+    /**
+     * Private constructor to prevent instantiation.
+     * This is a utility class with only static members.
+     * 
+     * @throws AssertionError if instantiation is attempted
+     */
     private AppConfig() {
         throw new AssertionError("Cannot instantiate AppConfig");
     }
     
     // ===== Display Constants =====
+    /** Standard separator line for console output */
     public static final String SEPARATOR = "========================================";
+    /** Prefix for success messages */
     public static final String SUCCESS_PREFIX = "[SUCCESS] ";
+    /** Prefix for error messages */
     public static final String ERROR_PREFIX = "[ERROR] ";
+    /** Prefix for informational messages */
     public static final String INFO_PREFIX = "[INFO] ";
     
     // ===== Validation Constants =====
+    /** Minimum base salary for permanent employees */
     public static final double MIN_BASE_SALARY = 10000.0;
+    /** Minimum hourly rate for contract employees */
     public static final double MIN_HOURLY_RATE = 15.0;
+    /** Minimum contract duration in months */
     public static final int MIN_CONTRACT_DURATION = 1;
+    /** Minimum benefits amount (must be non-negative) */
     public static final double MIN_BENEFITS = 0.0;
+    /** Minimum bonus amount (must be non-negative) */
     public static final double MIN_BONUS = 0.0;
+    /** Minimum hours worked (must be non-negative) */
     public static final int MIN_HOURS_WORKED = 0;
     
     // ===== Tax Configuration =====
+    /** Standard tax rate applied to salaries (15%) */
     public static final double TAX_RATE = 0.15; // 15% tax rate
     
     // ===== Menu Options =====
