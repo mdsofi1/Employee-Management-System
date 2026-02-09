@@ -150,10 +150,11 @@ public class EmployeeService {
         System.out.println("   ALL EMPLOYEES (" + employees.size() + " total)");
         System.out.println("========================================\n");
         
-        for (Employee emp : employees) {
+        // Replaced traditional loop with stream forEach - more concise and functional
+        employees.forEach(emp -> {
             emp.displayDetails();
             System.out.println();
-        }
+        });
     }
     
     /**
@@ -178,11 +179,10 @@ public class EmployeeService {
      * Calculate total company payroll
      */
     public double calculateTotalPayroll() {
-        double total = 0;
-        for (Employee emp : repository.getAllEmployees()) {
-            total += emp.calculateSalary();
-        }
-        return total;
+        // Replaced loop with stream mapToDouble and sum - more declarative and eliminates mutable state
+        return repository.getAllEmployees().stream()
+                .mapToDouble(Employee::calculateSalary)
+                .sum();
     }
     
     /**
@@ -200,6 +200,8 @@ public class EmployeeService {
         System.out.println("   PAYROLL SUMMARY");
         System.out.println("========================================\n");
         
+        // Note: Could use streams here, but traditional loop is clearer when accumulating multiple totals
+        // and performing I/O operations. Stream version would require custom collectors or side effects.
         double totalGross = 0;
         double totalTax = 0;
         

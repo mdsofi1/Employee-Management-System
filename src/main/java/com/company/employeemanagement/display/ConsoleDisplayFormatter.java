@@ -35,10 +35,11 @@ public class ConsoleDisplayFormatter implements IDisplayFormatter {
         System.out.println("   SEARCH RESULTS (" + employees.size() + " found)");
         System.out.println(SEPARATOR + "\n");
         
-        for (Employee emp : employees) {
+        // Replaced loop with stream forEach - cleaner and more functional approach
+        employees.forEach(emp -> {
             emp.displayDetails();
             System.out.println();
-        }
+        });
     }
     
     @Override

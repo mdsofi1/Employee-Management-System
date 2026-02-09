@@ -422,10 +422,11 @@ public class MenuHandler {
         }
         
         System.out.println("\n--- Search Results (" + employees.size() + " found) ---\n");
-        for (Employee emp : employees) {
+        // Replaced loop with stream forEach - more concise and functional
+        employees.forEach(emp -> {
             emp.displayDetails();
             System.out.println();
-        }
+        });
     }
     
     /**

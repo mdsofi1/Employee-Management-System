@@ -47,6 +47,8 @@ public class ObjectValidator implements IValidator<Object> {
         Class<?> clazz = obj.getClass();
         
         // Validate all fields including inherited ones
+        // Note: Traditional loops preferred here due to exception throwing, reflection API,
+        // and hierarchical class traversal which are clearer with imperative style
         while (clazz != null && clazz != Object.class) {
             Field[] fields = clazz.getDeclaredFields();
             

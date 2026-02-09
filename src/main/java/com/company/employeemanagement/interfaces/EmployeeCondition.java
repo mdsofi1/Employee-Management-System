@@ -75,4 +75,4 @@ public interface EmployeeCondition {
     default EmployeeCondition negate() {
         return (employee) -> !this.test(employee);
     }
-}}
+}
