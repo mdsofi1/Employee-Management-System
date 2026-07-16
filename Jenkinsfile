@@ -14,17 +14,38 @@ pipeline {
             }
         }
 
-        stage('Verify') {
+        stage('Verify Environment') {
             steps {
-                bat 'java -version'
-                bat 'mvn -version'
+                sh 'java -version'
+                sh 'mvn -version'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.war,target/*.jar', allowEmptyArchive: true
+            }
+        }
+
+    }
+
+    post {
+        success {
+            echo 'Build completed successfully!'
+        }
+
+        failure {
+            echo 'Build failed.'
+        }
+
+        always {
+            cleanWs()
         }
     }
 }
