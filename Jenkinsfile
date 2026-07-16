@@ -1,40 +1,61 @@
 pipeline {
     agent any
 
-    stage('Build') {
-    steps {
-        sh 'mvn clean package'
+    tools {
+        jdk 'JDK21'
+        maven 'Maven3'
     }
-}
+
+    environment {
+        MAVEN_OPTS = '-Xmx1024m'
+    }
 
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/mdsofi1/Employee-Management-System.git'
+            }
+        }
+
+        stage('Verify Java & Maven') {
+            steps {
+                sh 'java -version'
+                sh 'mvn -version'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Archive') {
+        stage('Test') {
             steps {
-                archiveArtifacts artifacts: 'target/*', fingerprint: true
+                sh 'mvn test'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'mvn clean package -DskipTests'
             }
         }
     }
 
     post {
+        always {
+            archiveArtifacts artifacts: 'target/*.jar,target/*.war', allowEmptyArchive: true
+        }
+
         success {
-            echo 'Build Successful'
+            echo 'Build completed successfully.'
         }
 
         failure {
-            echo 'Build Failed'
+            echo 'Build failed.'
         }
     }
 }
