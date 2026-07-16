@@ -3,30 +3,28 @@ pipeline {
 
     tools {
         jdk 'JDK25'
-        maven 'Maven'
+        maven 'Maven3'
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/mdsofi1/Employee-Management-System.git'
+                checkout scm
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                bat 'java -version'
+                bat 'mvn -version'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'java -version'
-                bat 'mvn -version'
                 bat 'mvn clean package -DskipTests'
             }
-        }
-    }
-
-    post {
-        success {
-            archiveArtifacts artifacts: 'target/*.war,target/*.jar', allowEmptyArchive: true
         }
     }
 }
